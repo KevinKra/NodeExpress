@@ -1,4 +1,6 @@
-##Node Training
+#Node Training
+
+##Intro
 
 ###Why node?
 
@@ -14,4 +16,17 @@
 
 ###Node is asynchronous
 
-- Node utilizes "non-blocking" asynchronous architecture by default. A single thread handles all the requests to the server, when we get a request and it's in the process of being resolved, it's placed in the `event queue`. Node continually checks the `event queue` and handles the request once it's been fulfilled. Node is ideal for application that need a lot of disk or network access, more clients can be served without the need of additional hardware. However, Node is not suitable for CPU-intensive applications because the thread would be stuck handling CPU intensive operations instead of touching the file/network and serving requests.
+- Node utilizes "non-blocking" asynchronous architecture by default. A single thread handles all the requests / clients to the server, when we get a request and it's in the process of being resolved, it's placed in the `event queue`. Node continually checks the `event queue` and handles the request once it's been fulfilled. Node is ideal for application that need a lot of disk or network access, more clients can be served without the need of additional hardware. However, Node is not suitable for CPU-intensive applications because the thread would be stuck handling CPU intensive operations instead of touching the file/network and serving requests.
+
+##Node Module system
+
+- Node utilizes the `Module System`, what this means is that scope only exists within each specific file unless explicitly exported/imported into different modules. Variables and functions are encapsulated inside their specific module (file), they are considered `private` variables unless exported and thus are considered `public` variables.
+
+###The Global Object
+
+- setTimeout(), clearTimeout(), setInterval(), clearInterval(), etc. All exist on the Node Global Object.
+- `global.console.log()` instead of `window.console.log()`
+
+###Where is the window object?
+
+- The window object/DOM is particular to web applications. Node leverages C++ to access different objects that exist on the machine for instance the file system or OS.
