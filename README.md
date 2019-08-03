@@ -31,3 +31,17 @@
 ###Where is the window object?
 
 - The window object/DOM is particular to web applications. Node leverages C++ to access different objects that exist on the machine for instance the file system or OS.
+
+####Noteworthy modules
+
+- Event: Indicate something has happened in the application. Example, we create an HTTP port and every time something happens at that port, we receive an event. EventEmitter is a very important Event class.
+
+##SemVer (Semantic Versioning NPM)
+
+- ^5.1.13 carrot allows for any version under the same Major branch release 5.~
+- ~3.3.1 tilda allows for any version under the same major/minor branches (only patches). 3.3 ~
+- `npm list` or `npm list --depth=0` to see current packages
+- `npm view <package>` shows metadata regarding a package
+- `npm i mongoose@2.4.2` download specific package version
+- `npm i -g npm-check-updates` => `ncu` or `ncu -u` to check for updates / update the package. Still requires new `npm install` to install updated package.
+- dev dependencies do not go into the production environment.
