@@ -6,11 +6,15 @@
 
 const express = require("express");
 const Joi = require("@hapi/joi");
+const authenticator = require("./middleware/authenticator");
+const logger = require("./middleware/logger");
 
 const app = express();
 const books = [];
 
 app.use(express.json());
+app.use(authenticator);
+app.use(logger);
 
 app.get("/", (req, res) => {
   res.send(books);
@@ -76,7 +80,8 @@ app.delete("/api/books/:id", (req, res) => {
   res.send(matchingBook);
 });
 
-app.listen(3000, () => console.log("Server running on port 3000..."));
+const port = process.env.port || 3000;
+app.listen(port, () => console.log("Server running on port 3000..."));
 
 function validateReq(book) {
   const schema = {
