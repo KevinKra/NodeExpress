@@ -1,16 +1,26 @@
 //set up RESTful api ✓
-//config
+//config ✓
 //custom middleware ✓
-//handle routes
+//handle routes ✓
 //handle views ✓
 
 const express = require("express");
+const morgan = require("morgan");
+const debug = require("debug")("app:startup");
 const authenticator = require("./middleware/authenticator");
 const logger = require("./middleware/logger");
 const home = require("./routes/home");
 const books = require("./routes/books");
 
 const app = express();
+
+//configuration && debugging
+console.log(`app: ${app.get("env")}`);
+
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  debug("Morgan enabled...");
+}
 
 app.set("view engine", "pug");
 app.set("views", "./views"); //default
