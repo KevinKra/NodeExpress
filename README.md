@@ -131,3 +131,24 @@ export DEBUG=
 
 Set debug module, and start the server.
 `DEBUG=app:db nodemon`
+
+#### Templating Engines
+
+- Used for returning HTML markup to the client instead of just JSON objects in response. There is where Templating engines come in, they include: `Pug` (formerly Jade), `Mustache`, `EJS`. Useful for when you want to return HTML markup to the client, not really needed for building backend services.
+
+set view engine for application: `app.set('view engine', 'pug');`
+optional setting (default) for putting views: `app.set('views', './views'); //default`
+
+### Structuring Express Applications
+
+- for every logical part of the application, the endpoints (routes) should be in their own files. Example: `/api/courses` should be in a `routes/courses.js` file whereas `/api/authors` should exist in an `routes/authors.js` file.
+
+For any routes that start with "/api/courses" use the courses that we imported. We cna then remove the redundant naming.
+`app.use("/api/courses", courses);`
+
+for every new route you will need to import express and router. Plus any additional needed middleware. Move middleware into a dir called `middleware`
+
+```
+const express = require("express");
+const router = express.Router();
+```
