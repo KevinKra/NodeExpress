@@ -143,7 +143,7 @@ optional setting (default) for putting views: `app.set('views', './views'); //de
 
 - for every logical part of the application, the endpoints (routes) should be in their own files. Example: `/api/courses` should be in a `routes/courses.js` file whereas `/api/authors` should exist in an `routes/authors.js` file.
 
-For any routes that start with "/api/courses" use the courses that we imported. We cna then remove the redundant naming.
+For any routes that start with "/api/courses" use the courses that we imported. We can then remove the redundant naming.
 `app.use("/api/courses", courses);`
 
 for every new route you will need to import express and router. Plus any additional needed middleware. Move middleware into a dir called `middleware`
