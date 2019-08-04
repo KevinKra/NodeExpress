@@ -1,90 +1,91 @@
+//set up RESTful api
+//config
+//custom middleware
+//handle routes
+//handle views
+
 const express = require("express");
 const Joi = require("@hapi/joi");
 
 const app = express();
+const books = [];
+
 app.use(express.json());
 
-const port = process.env.port || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}...`);
-});
-
-const movies = [];
-
 app.get("/", (req, res) => {
-  res.send("welcome!");
+  res.send(books);
 });
 
-app.get("/api/movies", (req, res) => {
-  res.send(movies);
+app.get("/api/books", (req, res) => {
+  if (books.length === 0)
+    return res.send("Currently no books have been saved. :(");
+  res.send(books);
 });
 
-app.get("/api/movies/:id", (req, res) => {
-  const matchingMovie = movies.find(
-    movie => movie.id === parseInt(req.params.id)
-  );
-  if (!matchingMovie) return res.status(404).send("No matching movies found.");
-  res.send(matchingMovie);
+app.get("/api/books/:id", (req, res) => {
+  const matchingBook = books.find(book => book.id === parseInt(req.params.id));
+  if (!matchingBook)
+    return res
+      .status(404)
+      .send("Hmm, it doesn't seem like that book exists...");
+  res.send(matchingBook);
 });
 
-app.post("/api/movies", (req, res) => {
-  //validate the inputs, determine schema
+app.post("/api/books", (req, res) => {
+  //validate input
+  const { error } = validateReq(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  //add to data
+  const newBook = {
+    id: books.length + 1,
+    title: req.body.title,
+    author: req.body.author
+  };
+  books.push(newBook);
+  //return data
+  res.send(newBook);
+});
+
+app.put("/api/books/:id", (req, res) => {
+  //validate the input, error
+  const { error } = validateReq(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  //locate matching id, error
+  const matchingBook = books.find(book => book.id === parseInt(req.params.id));
+  if (!matchingBook)
+    return res
+      .status(404)
+      .send("Uh oh, that book doesn't seem to exist in the database. ☹️");
+  //update data
+  matchingBook.title = req.body.title;
+  matchingBook.author = req.body.author;
+  //return data
+  res.send(matchingBook);
+});
+
+app.delete("/api/books/:id", (req, res) => {
+  //find matching book & delete, error
+  const matchingBook = books.find(book => book.id === parseInt(req.params.id));
+  if (!matchingBook)
+    return res
+      .status(404)
+      .send("Hmm, it doesn't seem like that book exists...");
+  const index = books.indexOf(matchingBook);
+  books.splice(index, 1);
+  //return deleted
+  res.send(matchingBook);
+});
+
+app.listen(3000, () => console.log("Server running on port 3000..."));
+
+function validateReq(book) {
   const schema = {
-    movie: Joi.string()
+    title: Joi.string()
       .min(2)
       .required(),
-    desc: Joi.string()
+    author: Joi.string()
       .min(5)
-      .max(10)
+      .required()
   };
-  const output = Joi.validate(req.body, schema);
-  if (output.error)
-    return res.status(400).send(output.error.details[0].message);
-  const newMovie = {
-    id: movies.length + 1,
-    movie: req.body.movie,
-    desc: req.body.desc
-  };
-  movies.push(newMovie);
-  res.send(movies);
-});
-
-app.put("/api/movies/:id", (req, res) => {
-  //validate input, error
-  const schema = {
-    movie: Joi.string()
-      .min(3)
-      .required(),
-    desc: Joi.string()
-      .min(5)
-      .max(10)
-  };
-  const output = Joi.validate(req.body, schema);
-  if (output.error)
-    return res.status(400).send(output.error.details[0].message);
-  //check there is something to replace, error
-  const matchingMovie = movies.find(
-    movie => movie.id === parseInt(req.params.id)
-  );
-  if (!matchingMovie)
-    return res.status(404).send("Sorry, no matching movie has been found.");
-  //replace it
-  matchingMovie.movie = req.body.movie;
-  matchingMovie.desc = req.body.desc;
-  //send response
-  res.send(matchingMovie);
-});
-
-app.delete("/api/movies/:id", (req, res) => {
-  //find matching movie, error
-  const matchingMovie = movies.find(
-    movie => movie.id === parseInt(req.params.id)
-  );
-  if (!matchingMovie)
-    return res.status(404).send("Whoops! Looks like that movie doesnt exist!");
-  //delete
-  const index = movies.indexOf(matchingMovie);
-  movies.splice(index, 1);
-  //return movies
-  res.send(movies);
-});
+  return Joi.validate(book, schema);
+}
