@@ -86,3 +86,48 @@ if (app.get("env") === "development") {
   console.log("Morgan enabled...");
 }
 ```
+
+setting env variable: `export NODE_ENV=production`
+
+#### Configuration Settings
+
+- Using different databases or "mail-servers" depending on which environment you're in. Using `npm config` package you can create a config folder with sub-dirs for default, development, and production configurations that are then logged via:
+
+```
+console.log("App name: " + config.get("name"));
+console.log("Mail server: " + config.get("mail.host"));
+```
+
+and determined by `export NODE_ENV=production`
+
+! Do not store passwords or secrets in the source control repository, store them instead in env variables.
+
+#### Debugging
+
+- By using the `debug` package, we can contain debug logs based on the env variable being exported to the debugger.
+- Perfer the debug module over `console.log` statements.
+
+`const startupDebugger = require("debug")("app:startup");`
+`const dbDebugger = require("debug")("app:db");`
+
+```
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  startupDebugger("Morgan enabled...");
+}
+```
+
+or
+
+`dbDebugger("Connected to the database...");`
+
+```Terminal Commands
+export DEBUG=app:<namespace>
+export DEBUG=app:*
+export DEBUG=app:startup
+export DEBUG=app:db
+export DEBUG=
+```
+
+Set debug module, and start the server.
+`DEBUG=app:db nodemon`
