@@ -105,7 +105,7 @@ and determined by `export NODE_ENV=production`
 #### Debugging
 
 - By using the `debug` package, we can contain debug logs based on the env variable being exported to the debugger.
-- Perfer the debug module over `console.log` statements.
+- Prefer the debug module over `console.log` statements.
 
 `const startupDebugger = require("debug")("app:startup");`
 `const dbDebugger = require("debug")("app:db");`
@@ -131,6 +131,10 @@ export DEBUG=
 
 Set debug module, and start the server.
 `DEBUG=app:db nodemon`
+
+To change the node environment:
+`export NODE_ENV=production`
+`export NODE_ENV=development`
 
 #### Templating Engines
 
