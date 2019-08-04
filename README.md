@@ -55,3 +55,9 @@
 - HTTP verbs/methods: GET | POST | PUT | DELETE
 - `?sortBy=name` is an example of a query parameter which can be returned with `req.query`
 - `Schema`, a Schema defines the shape of our objects. What properties do we have in an object, email, password, valid inputs, etc.
+
+### Express
+
+- Essentially an amalgamation of MiddleWare.
+- MiddleWare in Express: RouteHandlers, `express.json()` (reads the request, if there is a json object in the body of the request object, it parses it)
+- MiddleWare is called in sequence and they should be written in separate modular files.

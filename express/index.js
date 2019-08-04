@@ -1,9 +1,15 @@
 const express = require("express");
 const Joi = require("@hapi/joi");
+const logger = require("./logger");
+const authenticator = require("./authenticator");
 const app = express();
 
 //middleware used by app
 app.use(express.json());
+
+app.use(logger);
+
+app.use(authenticator);
 
 const courses = [
   { id: 1, name: "course1" },
