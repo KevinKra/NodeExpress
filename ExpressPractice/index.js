@@ -1,6 +1,6 @@
-//set up RESTful api
+//set up RESTful api ✓
 //config
-//custom middleware
+//custom middleware ✓
 //handle routes
 //handle views
 
@@ -12,12 +12,18 @@ const logger = require("./middleware/logger");
 const app = express();
 const books = [];
 
+app.set("view engine", "pug");
+app.set("views", "./views"); //default
+
 app.use(express.json());
 app.use(authenticator);
 app.use(logger);
 
 app.get("/", (req, res) => {
-  res.send(books);
+  res.render("index.pug", {
+    title: "My Express Practice App",
+    message: "Heya!"
+  });
 });
 
 app.get("/api/books", (req, res) => {
