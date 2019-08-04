@@ -56,8 +56,33 @@
 - `?sortBy=name` is an example of a query parameter which can be returned with `req.query`
 - `Schema`, a Schema defines the shape of our objects. What properties do we have in an object, email, password, valid inputs, etc.
 
-### Express
+# Express
 
+- Simplifies RESTful services compared to original Node structuring.
 - Essentially an amalgamation of MiddleWare.
-- MiddleWare in Express: RouteHandlers, `express.json()` (reads the request, if there is a json object in the body of the request object, it parses it)
+
+### MiddleWare
+
+- MiddleWare in Express: RouteHandlers which take the req.body and handle it sending out an appropriate response.
+- `express.json()` reads the request, if there is a json object in the body of the request object, it parses it.
+- `express.urlencoded({extended: true})` reads the URL payload and updates the database directly.
 - MiddleWare is called in sequence and they should be written in separate modular files.
+- `Request Processing Pipeline` is the process of handling requests with middleware. Either returns a response, or passes the request to an additional middleware func.
+
+custom middleware: `app.use(req, res, next) {...; next(); }`, next is a reference to next middleware function in the pipeline. It needs to be invoked in the func body otherwise the pipeline can't progress. Keep middleware functions in separate files and import back into the main.
+
+thirdParty middleware: `morgan` (allows logging), `helmet`
+
+### Environments
+
+- The environment, whether `production` or `development` can have specific middleware applied to it. For instance, if you're in a development environment you may want to use `morgan` the log your requests, while not having this middleware available (and slowing down) your production pipeline.
+
+`console.log(`NODE_ENV: \${process.env.NODE_ENV}`);` -- Returns undefined
+`console.log(`app: \${app.get("env")}`);` -- Returns current env
+
+```
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("Morgan enabled...");
+}
+```
