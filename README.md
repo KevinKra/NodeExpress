@@ -63,6 +63,7 @@
 
 ### MiddleWare
 
+- A middleware function is a function that takes a request object and either terminates the request/response cycle or passes control to another middleware function.
 - MiddleWare in Express: RouteHandlers which take the req.body and handle it sending out an appropriate response.
 - `express.json()` reads the request, if there is a json object in the body of the request object, it parses it.
 - `express.urlencoded({extended: true})` reads the URL payload and updates the database directly.
@@ -156,3 +157,26 @@ for every new route you will need to import express and router. Plus any additio
 const express = require("express");
 const router = express.Router();
 ```
+
+# MongoDB
+
+- MongoDB stores data in flexible, JSON-like documents, meaning fields can vary from document to document and data structure can be changed over time.
+- The document model maps to the objects in your application code, making data easy to work with.
+- MongoDB is a distributed database at its core, so high availability, horizontal scaling, and geographic distribution are built in and easy to use.
+- Ad hoc queries, indexing, and real time aggregation provide powerful ways to access and analyze your data.
+
+## Mongoose
+
+#### What is mongoose?
+
+- Mongoose is an object data modeling (ODM) library that provides a rigorous modeling environment for your data, enforcing structure as needed while still maintaining the flexibility that makes MongoDB powerful.
+
+#### What is a schema?
+
+- A schema is used to define the shape of documents within a collection in MongoDB.
+- Mongoose Schema Types: String, Number, Date, Buffer, Boolean, ObjectID, Array
+
+#### What is a model?
+
+- Classes, Objects === Course, nodeCourse
+- We make a schema, compile it into a model, which gives us a class, we then instantiate that class and create an object. The object maps to a document in the MongoDB database.
