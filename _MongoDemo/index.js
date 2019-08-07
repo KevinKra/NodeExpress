@@ -27,9 +27,40 @@ const createCourse = async () => {
 };
 
 //query courses
+// const getCourses = async () => {
+//   // const courses = await Course.find();
+//   const courses = await Course.find({ author: "Kevin", isPublished: true })
+//     .limit(10)
+//     .sort({ name: 1 })
+//     .select({ name: 1, tags: 1 });
+//   console.log(courses);
+// };
+
+// const getCourses = async () => {
+//   // const courses = await Course.find();
+//   const courses = await Course
+//     // .find({ $gt: 10, $lte: 20 })
+//     .find({ $in: [10, 15, 20] })
+//     .limit(10)
+//     .sort({ name: 1 })
+//     .select({ name: 1, tags: 1 });
+//   console.log(courses);
+// };
+
+//regex
 const getCourses = async () => {
   // const courses = await Course.find();
-  const courses = await Course.find({ author: "Kevin", isPublished: true });
+  const pageNumber = 2;
+  const pageSize = 10;
+  const courses = await Course
+    // .find({ $gt: 10, $lte: 20 })
+    .find({ author: /^Kevin/ })
+    // .or([{ author: "Mosh" }, { isPublished: true }])
+    .skip((pageNumber - 1) * pageSize)
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  // .count();
   console.log(courses);
 };
 
