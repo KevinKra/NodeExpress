@@ -160,6 +160,8 @@ const router = express.Router();
 
 # MongoDB
 
+- a `document database` or `no-sql database`
+- No tables, views, schemas, records, etc. No need to plan the design ahead of time, simply store JSON objects in mongoDB.
 - MongoDB stores data in flexible, JSON-like documents, meaning fields can vary from document to document and data structure can be changed over time.
 - The document model maps to the objects in your application code, making data easy to work with.
 - MongoDB is a distributed database at its core, so high availability, horizontal scaling, and geographic distribution are built in and easy to use.
@@ -180,3 +182,22 @@ const router = express.Router();
 
 - Classes, Objects === Course, nodeCourse
 - We make a schema, compile it into a model, which gives us a class, we then instantiate that class and create an object. The object maps to a document in the MongoDB database.
+
+### Querying Documents
+
+#### Comparison Operators
+
+//eq (equal)
+//ne (not equal)
+//gt (greater than)
+`const courses = await Course.find({ $gt: 10 })`
+//gte (greater than = to)
+//lt (less than)
+//lte (less than or =)
+// in
+//nin (not in)
+
+#### Logical Operators
+
+//or
+//and
