@@ -14,6 +14,16 @@ const books = require("./routes/books");
 
 const app = express();
 
+getRepositories("Jimbob", cb => {
+  console.log("cb", cb);
+});
+
+function getRepositories(username, cb) {
+  setTimeout(() => {
+    cb({ username, repos: ["repo1", "repo2", "repo3"] });
+  }, 2000);
+}
+
 //configuration && debugging
 console.log(`app: ${app.get("env")}`);
 
