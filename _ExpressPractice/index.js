@@ -20,7 +20,6 @@ getRepositories("Jimbob", cb => {
 
 function getRepositories(username, cb) {
   setTimeout(() => {
-    console.log("whatever the fuck this is");
     cb({ username, repos: ["repo1", "repo2", "repo3"] });
   }, 2000);
 }
